@@ -65,8 +65,11 @@ func (p *GoWayProxy) Handle(w http.ResponseWriter, req *http.Request) {
 		version = DEFAULT_VERSION
 	}
 
-
-	rs, cl, newPath := p.checkClient(req.URL.Path, version)
+	path := req.URL.Path
+	if ( path[len(path) - 1] != '/' ) {
+		path = fmt.Sprintf("%s/", path)
+	}
+	rs, cl, newPath := p.checkClient(path, version)
 	req.URL.Path = newPath
 
 	req.Header.Set(GOWAY_PRODUCT, cl.Product)
