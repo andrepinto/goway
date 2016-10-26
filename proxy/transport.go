@@ -66,7 +66,7 @@ func (t *transport) RoundTrip(req *http.Request) (res *http.Response, err error)
 		Host:          	req.Host,
 		Status:        	res.StatusCode,
 		Size:          	res.ContentLength,
-		ElapsedTime:   	finishTime.Sub(startTime),
+		ElapsedTime:   	finishTime.Sub(startTime).Seconds(),
 		RequestHeader: 	req.Header,
 		ReqBody:		string(reqBodyBytes),
 		ResBody:		string(resBodyBytes),
