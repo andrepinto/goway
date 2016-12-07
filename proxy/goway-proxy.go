@@ -94,7 +94,7 @@ func (p *GoWayProxy) Handle(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	p.respond(req, res.Set(http.StatusNotFound, API_ROUTE_NOT_FOUND, nil) )
+	p.respond(req, res.Set(http.StatusNotFound, ROUTE_NOT_FOUND, nil) )
 }
 
 func(p *GoWayProxy) checkRoute(path string, verb string, code string, version string, client bool) (bool, *router.Route){
