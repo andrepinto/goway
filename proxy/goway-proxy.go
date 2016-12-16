@@ -65,8 +65,11 @@ func (p *GoWayProxy) Handle(w http.ResponseWriter, req *http.Request) {
 		version = DEFAULT_VERSION
 	}
 
-
-	rs, cl, newPath := p.checkClient(req.URL.Path, version)
+	path := req.URL.Path
+	if ( path[len(path) - 1] != '/' ) {
+		path = fmt.Sprintf("%s/", path)
+	}
+	rs, cl, newPath := p.checkClient(path, version)
 	req.URL.Path = newPath
 
 	req.Header.Set(GOWAY_PRODUCT, cl.Product)
@@ -91,7 +94,7 @@ func (p *GoWayProxy) Handle(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	p.respond(req, res.Set(http.StatusNotFound, API_ROUTE_NOT_FOUND, nil) )
+	p.respond(req, res.Set(http.StatusNotFound, ROUTE_NOT_FOUND, nil) )
 }
 
 func(p *GoWayProxy) checkRoute(path string, verb string, code string, version string, client bool) (bool, *router.Route){
@@ -150,7 +153,7 @@ func(p *GoWayProxy) respond( req *http.Request, res *HttpResponse ) {
 		Host:          	req.Host,
 		Status:        	res.Status,
 		Size:          	int64(len(response)),
-		ElapsedTime:   	end.Sub(res.StartTime),
+		ElapsedTime:   	end.Sub(res.StartTime).Seconds(),
 		RequestHeader: 	req.Header,
 		ResBody:		response,
 		ReqBody: 		request,

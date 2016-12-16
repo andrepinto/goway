@@ -9,6 +9,7 @@ type BasicLog struct {
 
 }
 
+//noinspection GoUnusedExportedFunction
 func NewBasicLog() *BasicLog{
 	return &BasicLog{}
 }
@@ -17,7 +18,6 @@ func(lg *BasicLog) Log(record *LogRecord){
 	b, err := json.Marshal(record)
 	if err != nil {
 		log.Panic(err)
-		return
 	}
 	log.Println(string(b))
 }
