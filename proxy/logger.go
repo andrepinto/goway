@@ -25,6 +25,8 @@ type LogRecord struct {
 	CustomRecords                             map[string]string	`json:"custom_records"`
 	ReqBody					  string		`json:"request_body"`
 	ResBody					  string		`json:"response_body"`
+	ServiceName				  string		`json:"service_name"`
+	BasePath			 	  string		`json:"base_path"`
 
 }
 

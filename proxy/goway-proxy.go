@@ -201,6 +201,9 @@ func(p *GoWayProxy) respond( req *http.Request, res *HttpResponse ) {
 
 func(p *GoWayProxy) redirect(route *router.Route, globalInjectData []product.InjectData_v1, req *http.Request, res *HttpResponse) {
 
+	req.Header.Set(GOWAY_SERVICE_NAME, route.ApiMethod.ServiceName)
+	req.Header.Set(GOWAY_BASE_PATH, route.ApiMethod.ListenPath)
+
 	if(route.ApiMethod.InjectGlobalData){
 		p.injectDataValues(util.MergeInjectData(globalInjectData,route.ApiMethod.InjectData), req)
 	}else{

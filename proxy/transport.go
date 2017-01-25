@@ -17,7 +17,10 @@ type transport struct {
 
 func (t *transport) RoundTrip(req *http.Request) (res *http.Response, err error) {
 
-
+	serviceName :=    req.Header.Get(GOWAY_SERVICE_NAME)
+	basePath := 	req.Header.Get(GOWAY_BASE_PATH)
+	req.Header.Del(GOWAY_SERVICE_NAME)
+	req.Header.Del(GOWAY_BASE_PATH)
 
 	reqBodyBytes, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -74,6 +77,8 @@ func (t *transport) RoundTrip(req *http.Request) (res *http.Response, err error)
 		Product:       	req.Header.Get(GOWAY_PRODUCT),
 		Client:        	req.Header.Get(GOWAY_CLIENT),
 		Version:       	req.Header.Get(GOWAY_VERSION),
+		ServiceName:    serviceName,
+		BasePath: 	basePath,
 
 	}
 
