@@ -15,11 +15,11 @@ type Route struct {
 	Handlers []string
 	Code string
 	Version string
-	ApiMethod domain.RoutesV1
+	ApiMethod *domain.RoutesV1
 }
 
 
-func newRoute(method string, name string, pattern string, handlers []string, code string, version string, apiMethod domain.RoutesV1) (route *Route) {
+func newRoute(method string, name string, pattern string, handlers []string, code string, version string, apiMethod *domain.RoutesV1) (route *Route) {
 	pattern = strings.Replace(pattern, "(int)", "([0-9]+)", -1)
 	pattern = strings.Replace(pattern, "(alpha)", "([a-z]+)", -1)
 	pattern = strings.Replace(pattern, "(alphanumeric)", "([a-z0-9]+)", -1)

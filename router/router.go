@@ -50,35 +50,35 @@ func NewRouter() *Router {
 	return router
 }
 
-func (r *Router) Head(name string, pattern string, code string, version string, handlers []string, apiMethod domain.RoutesV1 ) *Route {
+func (r *Router) Head(name string, pattern string, code string, version string, handlers []string, apiMethod *domain.RoutesV1 ) *Route {
 	return r.addRoute("HEAD", name, pattern, code, version, handlers, apiMethod)
 }
 
-func (r *Router) Get(name string, pattern string, code string, version string, handlers []string, apiMethod domain.RoutesV1 ) *Route {
+func (r *Router) Get(name string, pattern string, code string, version string, handlers []string, apiMethod *domain.RoutesV1 ) *Route {
 	return r.addRoute("GET", name, pattern, code, version, handlers, apiMethod)
 }
 
-func (r *Router) Post(name string, pattern string, code string, version string, handlers []string, apiMethod domain.RoutesV1) *Route {
+func (r *Router) Post(name string, pattern string, code string, version string, handlers []string, apiMethod *domain.RoutesV1) *Route {
 	return r.addRoute("POST", name, pattern, code, version, handlers, apiMethod)
 }
 
-func (r *Router) Put(name string, pattern string, code string, version string, handlers []string, apiMethod domain.RoutesV1) *Route {
+func (r *Router) Put(name string, pattern string, code string, version string, handlers []string, apiMethod *domain.RoutesV1) *Route {
 	return r.addRoute("PUT", name, pattern, code, version, handlers, apiMethod)
 }
 
-func (r *Router) Patch(name string, pattern string, code string, version string, handlers []string, apiMethod domain.RoutesV1) *Route {
+func (r *Router) Patch(name string, pattern string, code string, version string, handlers []string, apiMethod *domain.RoutesV1) *Route {
 	return r.addRoute("PATCH", name, pattern, code, version, handlers, apiMethod)
 }
 
-func (r *Router) Delete(name string, pattern string, code string, version string, handlers []string, apiMethod domain.RoutesV1) *Route {
+func (r *Router) Delete(name string, pattern string, code string, version string, handlers []string, apiMethod *domain.RoutesV1) *Route {
 	return r.addRoute("DELETE", name, pattern, code, version, handlers, apiMethod)
 }
 
-func (r *Router) Options(name string, pattern string, code string, version string, handlers []string, apiMethod domain.RoutesV1) *Route {
+func (r *Router) Options(name string, pattern string, code string, version string, handlers []string, apiMethod *domain.RoutesV1) *Route {
 	return r.addRoute("OPTIONS", name, pattern, code, version, handlers, apiMethod)
 }
 
-func (r *Router) addRoute(method string, name string, pattern string, code string, version string,  handlers []string, apiMethod domain.RoutesV1) *Route {
+func (r *Router) addRoute(method string, name string, pattern string, code string, version string,  handlers []string, apiMethod *domain.RoutesV1) *Route {
 
 
 	route := newRoute(method, name, pattern, handlers, code, version, apiMethod)

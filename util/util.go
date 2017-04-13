@@ -2,7 +2,6 @@ package util
 
 import (
 	"fmt"
-	"github.com/andrepinto/goway/product"
 	"github.com/andrepinto/goway/domain"
 )
 
@@ -43,8 +42,8 @@ func MergeInjectData(global []*domain.InjectDataV1, method []*domain.InjectDataV
 	return result
 }
 
-func FilterClientRoutesByAssets(cl *domain.ClientV1, asset []string, f func(domain.RoutesV1, []string) bool) []domain.RoutesV1 {
-	routes := make([]domain.RoutesV1, 0)
+func FilterClientRoutesByAssets(cl *domain.ClientV1, asset []string, f func(*domain.RoutesV1, []string) bool) []*domain.RoutesV1 {
+	routes := make([]*domain.RoutesV1, 0)
 	for _, v := range cl.Routes {
 		if f(v, asset) {
 			routes = append(routes, v)
@@ -55,8 +54,8 @@ func FilterClientRoutesByAssets(cl *domain.ClientV1, asset []string, f func(doma
 }
 
 
-func FilterProductsRoutesByAssets(cl *domain.ProductV1, asset []string, f func(domain.RoutesV1, []string) bool) []domain.RoutesV1 {
-	routes := make([]domain.RoutesV1, 0)
+func FilterProductsRoutesByAssets(cl *domain.ProductV1, asset []string, f func(*domain.RoutesV1, []string) bool) []*domain.RoutesV1 {
+	routes := make([]*domain.RoutesV1, 0)
 	for _, v := range cl.Routes {
 		if f(v, asset) {
 			routes = append(routes, v)
@@ -67,10 +66,10 @@ func FilterProductsRoutesByAssets(cl *domain.ProductV1, asset []string, f func(d
 }
 
 
-func FilterArrClientRoutesByAssets(cl []domain.ClientV1, asset []string, f func(domain.RoutesV1, []string) bool) []domain.ClientV1 {
-	clients := make([]domain.ClientV1, 0)
+func FilterArrClientRoutesByAssets(cl []*domain.ClientV1, asset []string, f func(*domain.RoutesV1, []string) bool) []*domain.ClientV1 {
+	clients := make([]*domain.ClientV1, 0)
 	for _, c := range cl {
-		routes := make([]domain.RoutesV1, 0)
+		routes := make([]*domain.RoutesV1, 0)
 		for _, v := range c.Routes {
 			if f(v, asset) {
 				routes = append(routes, v)
@@ -85,10 +84,10 @@ func FilterArrClientRoutesByAssets(cl []domain.ClientV1, asset []string, f func(
 	return clients
 }
 
-func FilterArrProductRoutesByAssets(cl []domain.ProductV1, asset []string, f func(domain.RoutesV1, []string) bool) []domain.ProductV1 {
-	products := make([]domain.ProductV1, 0)
+func FilterArrProductRoutesByAssets(cl []*domain.ProductV1, asset []string, f func(*domain.RoutesV1, []string) bool) []*domain.ProductV1 {
+	products := make([]*domain.ProductV1, 0)
 	for _, c := range cl {
-		routes := make([]domain.RoutesV1, 0)
+		routes := make([]*domain.RoutesV1, 0)
 		for _, v := range c.Routes {
 			if f(v, asset) {
 				routes = append(routes, v)
@@ -103,7 +102,7 @@ func FilterArrProductRoutesByAssets(cl []domain.ProductV1, asset []string, f fun
 	return products
 }
 
-func FilterByAsset(route domain.RoutesV1, assets []string) bool{
+func FilterByAsset(route *domain.RoutesV1, assets []string) bool{
 	return Filter(assets, route.Asset)
 }
 

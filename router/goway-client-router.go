@@ -1,7 +1,6 @@
 package router
 
 import (
-	"github.com/andrepinto/goway/product"
 	"github.com/andrepinto/goway/util"
 	"github.com/andrepinto/goway/constants"
 	"github.com/andrepinto/goway/domain"
