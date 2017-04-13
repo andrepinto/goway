@@ -31,19 +31,19 @@ type Route struct {
 	BaseModel
 	Code				string 				`gorm:"unique_index:idx_route_code" json:"code"`
 	ReferrerID			string				`gorm:"unique_index:idx_route_code"`
-	ListenPath 			string 				`json:"listen_path"`
+	ListenPath 			string 				`json:"listenPath"`
 	Verb 				string 				`json:"verb"`
-	ServiceName 			string 				`json:"service_name"`
+	ServiceName 			string 				`json:"serviceName"`
 	Handlers 			[]string 			`sql:"-" json:"handlers"`
 	Roles	 			[]string 			`sql:"-" json:"roles"`
 	Tags	 			[]string 			`sql:"-" json:"tags"`
 	HandlersSerialized 		string
 	RolesSerialized			string
 	TagsSerialized			string
-	InjectData			[]Inject			`gorm:"ForeignKey:ReferrerID;AssociationForeignKey:ID" json:"inject_data"`
-	InjectGlobalData		bool				`json:"inject_global_data"`
+	InjectData			[]Inject			`gorm:"ForeignKey:ReferrerID;AssociationForeignKey:ID" json:"injectData"`
+	InjectGlobalData		bool				`json:"injectGlobalData"`
 	Asset				string				`json:"asset"`
-	AssetId				string				`json:"asset_id"`
+	AssetId				string				`json:"assetId"`
 	Alias				string				`json:"alias"`
 }
 
@@ -94,13 +94,13 @@ func (inject *Inject) BeforeCreate(scope *gorm.Scope) (err error) {
 type Client struct {
 	BaseModel
 	Code				string 				`sql:"unique;index" json:"code"`
-	ApiPath				string 				`sql:"unique;index" json:"api_path"`
+	ApiPath				string 				`sql:"unique;index" json:"apiPath"`
 	Product				string				`json:"product"`
-	ProductVersion			string				`json:"product_version"`
+	ProductVersion			string				`json:"productVersion"`
 	Client				string 				`json:"client"`
-	RemoveApiPath			bool				`json:"remove_api_path"`
+	RemoveApiPath			bool				`json:"removeApiPath"`
 	Version 			string				`json:"version"`
-	InjectData			[]Inject			`gorm:"ForeignKey:ReferrerID;AssociationForeignKey:ID" json:"global_inject_data"`
+	InjectData			[]Inject			`gorm:"ForeignKey:ReferrerID;AssociationForeignKey:ID" json:"globalInjectData"`
 	Routes	 			[]Route 			`gorm:"ForeignKey:ReferrerID;AssociationForeignKey:ID" json:"routes"`
 }
 
