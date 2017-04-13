@@ -1,11 +1,12 @@
 package product
 
+import "github.com/andrepinto/goway/domain"
 
 type IProductRepository interface {
 
-	GetAllProducts() []Product_v1
-	GetAllClients()	 []Client_v1
-	CreateProduct(product *Product_v1) (bool, *Product_v1)
-	CreateClient(client *Client_v1) (bool, *Client_v1)
+	GetAllProducts() []domain.ProductV1
+	GetAllClients()	 []domain.ClientV1
+	CreateProduct(product *domain.ProductV1) (bool, *domain.ProductV1)
+	CreateClient(client *domain.ClientV1) (bool, *domain.ClientV1)
 
 }

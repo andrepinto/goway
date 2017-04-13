@@ -1,4 +1,25 @@
 package: github.com/andrepinto/goway
 import:
 - package: github.com/dgrijalva/jwt-go
-  version: ^3.0.0
+  version: 3.0.0
+- package: github.com/golang/protobuf
+  version: 2bba0603135d7d7f5cb73b2125beeda19c09f4ef
+  subpackages:
+  - proto
+- package: golang.org/x/net
+  version: d1e1b351919c6738fdeb9893d5c998b161464f0c
+  subpackages:
+  - context
+- package: google.golang.org/grpc
+  version: v1.2.1
+- package: github.com/grpc-ecosystem/grpc-gateway
+  version: v1.2.0
+  subpackages:
+  - protoc-gen-grpc-gateway
+  - protoc-gen-swagger
+- package: github.com/jinzhu/gorm
+  version: v1.0
+- package: github.com/twinj/uuid
+  version: 0.10.0
+- package: github.com/imdario/mergo
+  version: 0.2.2

@@ -1,0 +1,357 @@
+syntax = "proto3";
+package domain;
+
+import "google/api/annotations.proto";
+
+service Goway {
+    rpc Version (VersionRequest) returns (VersionResponse) {
+        option (google.api.http) = {
+          post: "/v1/version"
+          body: "*"
+        };
+    }
+
+    rpc GetProducts (ProductsRequest) returns (ProductsResponse) {
+        option (google.api.http) = {
+          post: "/v1/products"
+          body: "*"
+        };
+    }
+
+    rpc GetProduct (ProductRequest) returns (ProductResponse) {
+        option (google.api.http) = {
+          post: "/v1/productById"
+          body: "*"
+        };
+    }
+
+    rpc GetProductByCode (ProductRequest) returns (ProductResponse) {
+        option (google.api.http) = {
+          post: "/v1/productByCode"
+          body: "*"
+        };
+    }
+
+    rpc UpdateProduct (ProductUpdateRequest) returns (ProductResponse) {
+        option (google.api.http) = {
+          post: "/v1/productUpdate"
+          body: "*"
+        };
+    }
+
+    rpc DeleteProduct (ProductRequest) returns (DeleteResponse) {
+        option (google.api.http) = {
+          post: "/v1/productDelete"
+          body: "*"
+        };
+    }
+
+    rpc CreateProduct (ProductCreateRequest) returns (ProductResponse) {
+        option (google.api.http) = {
+          post: "/v1/productCreate"
+          body: "*"
+        };
+    }
+
+    rpc CreateProductRoute (ProductCreateRouteRequest) returns (RouteResponse) {
+        option (google.api.http) = {
+          post: "/v1/productCreateRoute"
+          body: "*"
+        };
+    }
+
+    rpc GetClients (ClientsRequest) returns (ClientsResponse) {
+        option (google.api.http) = {
+          post: "/v1/clients"
+          body: "*"
+        };
+    }
+
+    rpc GetClient (ClientRequest) returns (ClientResponse) {
+        option (google.api.http) = {
+          post: "/v1/clientById"
+          body: "*"
+        };
+    }
+
+    rpc GetClientByCode (ClientRequest) returns (ClientResponse) {
+        option (google.api.http) = {
+          post: "/v1/clientByCode"
+          body: "*"
+        };
+    }
+
+    rpc UpdateClient (ClientUpdateRequest) returns (ClientResponse) {
+        option (google.api.http) = {
+          post: "/v1/clientUpdate"
+          body: "*"
+        };
+    }
+
+    rpc DeleteClient (ClientRequest) returns (DeleteResponse) {
+        option (google.api.http) = {
+          post: "/v1/clientDelete"
+          body: "*"
+        };
+    }
+
+    rpc CreateClient (ClientCreateRequest) returns (ClientResponse) {
+        option (google.api.http) = {
+          post: "/v1/clientCreate"
+          body: "*"
+        };
+    }
+
+    rpc CreateClientRoute (ClientCreateRouteRequest) returns (RouteResponse) {
+        option (google.api.http) = {
+          post: "/v1/clientCreateRoute"
+          body: "*"
+        };
+    }
+
+    rpc CreateClientInject (ClientCreateInjectRequest) returns (InjectResponse) {
+        option (google.api.http) = {
+          post: "/v1/clientCreateInject"
+          body: "*"
+        };
+    }
+
+    rpc GetRoutes (RoutesRequest) returns (RoutesResponse) {
+        option (google.api.http) = {
+          post: "/v1/routes"
+          body: "*"
+        };
+    }
+
+    rpc GetRoute (RouteRequest) returns (RouteResponse) {
+        option (google.api.http) = {
+          post: "/v1/routeById"
+          body: "*"
+        };
+    }
+
+    rpc GetRouteByCode (RouteRequest) returns (RouteResponse) {
+        option (google.api.http) = {
+          post: "/v1/routeByCode"
+          body: "*"
+        };
+    }
+
+    rpc UpdateRoute (RouteUpdateRequest) returns (RouteResponse) {
+        option (google.api.http) = {
+          post: "/v1/routeUpdate"
+          body: "*"
+        };
+    }
+
+    rpc DeleteRoute (RouteRequest) returns (DeleteResponse) {
+        option (google.api.http) = {
+          post: "/v1/routeDelete"
+          body: "*"
+        };
+    }
+
+    rpc CreateRouteInject (RouteCreateInjectRequest) returns (InjectResponse) {
+        option (google.api.http) = {
+          post: "/v1/routeCreateInject"
+          body: "*"
+        };
+    }
+
+    rpc GetInjects (InjectsRequest) returns (InjectsResponse) {
+        option (google.api.http) = {
+          post: "/v1/injects"
+          body: "*"
+        };
+    }
+
+    rpc GetInject (InjectRequest) returns (InjectResponse) {
+        option (google.api.http) = {
+          post: "/v1/injectById"
+          body: "*"
+        };
+    }
+
+    rpc GetInjectByCode (InjectRequest) returns (InjectResponse) {
+        option (google.api.http) = {
+          post: "/v1/injectByCode"
+          body: "*"
+        };
+    }
+
+    rpc UpdateInject (InjectUpdateRequest) returns (InjectResponse) {
+        option (google.api.http) = {
+          post: "/v1/injectUpdate"
+          body: "*"
+        };
+    }
+
+    rpc DeleteInject (InjectRequest) returns (DeleteResponse) {
+        option (google.api.http) = {
+          post: "/v1/injectDelete"
+          body: "*"
+        };
+    }
+}
+
+message VersionRequest {
+}
+
+message VersionResponse {
+    string value = 1;
+}
+
+message DeleteResponse {
+    bool value = 1;
+}
+
+message ProductsRequest {
+}
+
+message ProductRequest {
+    string value = 1;
+}
+
+message ProductUpdateRequest {
+    string id = 1;
+    Product_v1 product = 2;
+}
+
+message ProductCreateRequest {
+    Product_v1 product = 1;
+}
+
+message ProductCreateRouteRequest {
+    string id = 1;
+    Routes_v1 route = 2;
+}
+
+message ProductResponse {
+    Product_v1 result = 1;
+}
+
+message ProductsResponse {
+    repeated Product_v1 result = 1;
+}
+
+message Product_v1 {
+    string id = 1;
+    string code = 2;
+    string name = 3;
+    string version = 4;
+    repeated Routes_v1 routes = 5;
+}
+
+message ClientsRequest {
+}
+
+message ClientRequest {
+    string value = 1;
+}
+
+message ClientUpdateRequest {
+    string id = 1;
+    Client_v1 client = 2;
+}
+
+message ClientCreateRequest {
+    Client_v1 client = 1;
+}
+
+message ClientCreateRouteRequest {
+    string id = 1;
+    Routes_v1 route = 2;
+}
+
+message ClientCreateInjectRequest {
+    string id = 1;
+    InjectData_v1 route = 2;
+}
+
+message ClientResponse {
+    Client_v1 result = 1;
+}
+
+message ClientsResponse {
+    repeated Client_v1 result = 1;
+}
+
+message Client_v1 {
+    string id = 1;
+    string apiPath = 2;
+    string product = 3;
+    string productVersion = 4;
+    string client = 5;
+    bool removeApiPath = 6;
+    string version = 7;
+    repeated InjectData_v1 globalInjectData = 8;
+    repeated Routes_v1 routes = 9;
+}
+
+message RoutesRequest {
+}
+
+message RouteRequest {
+    string value = 1;
+}
+
+message RouteUpdateRequest {
+    string id = 1;
+    Routes_v1 route = 2;
+}
+
+message RouteCreateInjectRequest {
+    string id = 1;
+    InjectData_v1 inject = 2;
+}
+
+message RouteResponse {
+    Routes_v1 result = 1;
+}
+
+message RoutesResponse {
+    repeated Routes_v1 result = 1;
+}
+
+message Routes_v1 {
+    string id = 1;
+    string code = 2;
+    string verb = 3;
+    string listenPath = 4;
+    string serviceName = 5;
+    repeated string handlers = 6;
+    repeated string roles = 7;
+    repeated string tags = 8;
+    repeated InjectData_v1 injectData = 9;
+    bool injectGlobalData = 10;
+    string asset = 11;
+    string assetId = 12;
+    string alias = 13;
+}
+
+message InjectsRequest {
+}
+
+message InjectRequest {
+    string value = 1;
+}
+
+message InjectUpdateRequest {
+    string id = 1;
+    InjectData_v1 inject = 2;
+}
+
+message InjectResponse {
+    InjectData_v1 result = 1;
+}
+
+message InjectsResponse {
+    repeated InjectData_v1 result = 1;
+}
+
+message InjectData_v1 {
+    string id = 1;
+    string code = 2;
+    string value = 3;
+    string where = 4;
+}

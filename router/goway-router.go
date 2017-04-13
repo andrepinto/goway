@@ -1,7 +1,7 @@
 package router
 import (
 	"fmt"
-	"github.com/andrepinto/goway/product"
+	"github.com/andrepinto/goway/domain"
 )
 
 type RouterOptions func(*GoWayRouter) *GoWayRouter
@@ -50,7 +50,7 @@ func (r *GoWayRouter) CheckRoute(path string, verb string, code string, version 
 	return r.Router.Dispatch(verb, path, code, version)
 }
 
-func (r *GoWayRouter) CreateRoute(code string, version string, routes []product.Routes_v1)  {
+func (r *GoWayRouter) CreateRoute(code string, version string, routes []domain.RoutesV1)  {
 	for _, k := range routes{
 		fmt.Println(fmt.Sprintf("%s_%s_%s", version, code, k.Code))
 		r.AddRoute(fmt.Sprintf("%s_%s_%s", version, code, k.Code), k.ListenPath, k.Verb, code, version, k.Handlers, k)
@@ -61,7 +61,7 @@ func (r *GoWayRouter) CreateRoute(code string, version string, routes []product.
 	}
 }
 
-func (r *GoWayRouter) AddRoute(name string, path string, verb string,  code string, version string, handlers []string, apiMethod product.Routes_v1){
+func (r *GoWayRouter) AddRoute(name string, path string, verb string,  code string, version string, handlers []string, apiMethod domain.RoutesV1){
 	fmt.Println("add:", path)
 	switch verb {
 	case "HEAD":

@@ -11,10 +11,10 @@ import (
 
 	. "github.com/andrepinto/goway"
 	"github.com/andrepinto/goway/router"
-	"github.com/andrepinto/goway/product"
 	"github.com/andrepinto/goway/util"
 	"github.com/andrepinto/goway/handlers"
 	"github.com/andrepinto/goway/util/worker"
+	"github.com/andrepinto/goway/domain"
 	"github.com/andrepinto/goway/constants"
 )
 
@@ -68,7 +68,7 @@ func (p *GoWayProxy) Handle(w http.ResponseWriter, req *http.Request) {
 	var rs bool
 	var route *router.Route
 	var clInternalRouter *router.InternalClientRouter
-	var cl *product.Client_v1
+	var cl *domain.ClientV1
 	var newPath string
 
 	res :=  NewHttpResponse(w)
@@ -199,7 +199,7 @@ func(p *GoWayProxy) respond( req *http.Request, res *HttpResponse ) {
 	worker.JobQueue <- job
 }
 
-func(p *GoWayProxy) redirect(route *router.Route, globalInjectData []product.InjectData_v1, req *http.Request, res *HttpResponse) {
+func(p *GoWayProxy) redirect(route *router.Route, globalInjectData []*domain.InjectDataV1, req *http.Request, res *HttpResponse) {
 
 	req.Header.Set(GOWAY_SERVICE_NAME, route.ApiMethod.ServiceName)
 	req.Header.Set(GOWAY_BASE_PATH, route.ApiMethod.ListenPath)
@@ -224,16 +224,16 @@ func(p *GoWayProxy) redirect(route *router.Route, globalInjectData []product.Inj
 
 }
 
-func(p *GoWayProxy) injectDataValues(values []product.InjectData_v1, r *http.Request){
+func(p *GoWayProxy) injectDataValues(values []*domain.InjectDataV1, r *http.Request){
 	for _, v := range values{
-		if v.Where==product.WHERE_HEADER {
+		if v.Where==WHERE_HEADER {
 			//w.Header().Set(v.Code, v.Value)
 			r.Header.Del(v.Code)
 			r.Header.Add(v.Code, v.Value)
 			continue
 		}
 
-		if v.Where==product.WHERE_PARAMS {
+		if v.Where==WHERE_PARAMS {
 			values := r.URL.Query()
 			values.Del(v.Code)
 			values.Add(v.Code, v.Value)
@@ -241,7 +241,7 @@ func(p *GoWayProxy) injectDataValues(values []product.InjectData_v1, r *http.Req
 			continue
 		}
 
-		if v.Where==product.WHERE_URL {
+		if v.Where==WHERE_URL {
 			r.URL.Path = fmt.Sprintf("/%s/%s%s", v.Code, v.Value, r.URL.Path)
 			continue
 		}

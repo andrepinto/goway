@@ -1,9 +1,9 @@
 package router
 
 import (
-	"github.com/andrepinto/goway/product"
-	"github.com/andrepinto/goway/util"
 	"fmt"
+	"github.com/andrepinto/goway/util"
+	"github.com/andrepinto/goway/domain"
 )
 
 type GowayProductRouter struct  {
@@ -11,7 +11,7 @@ type GowayProductRouter struct  {
 }
 
 type InternalProductRouter struct {
-	Product *product.Product_v1
+	Product *domain.ProductV1
 	Router   *GoWayRouter
 }
 
@@ -23,7 +23,7 @@ func NewGowayProductRouter() *GowayProductRouter{
 	return r
 }
 
-func (r *GowayProductRouter) AddProduct(product product.Product_v1, mode string, filters []string, options ...RouterOptions){
+func (r *GowayProductRouter) AddProduct(product domain.ProductV1, mode string, filters []string, options ...RouterOptions){
 	internalRouter := &InternalProductRouter{
 		&product,
 		NewGoWayRouter(options...),

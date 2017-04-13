@@ -4,6 +4,7 @@ import (
 	"github.com/andrepinto/goway/product"
 	"github.com/andrepinto/goway/util"
 	"github.com/andrepinto/goway/constants"
+	"github.com/andrepinto/goway/domain"
 )
 
 type GowayClientRouter struct  {
@@ -11,7 +12,7 @@ type GowayClientRouter struct  {
 }
 
 type InternalClientRouter struct {
-	Client *product.Client_v1
+	Client *domain.ClientV1
 	Router   *GoWayRouter
 }
 
@@ -24,7 +25,7 @@ func NewGowayClientRouter() *GowayClientRouter{
 }
 
 
-func (r *GowayClientRouter) AddClient(client product.Client_v1, mode string, filters []string, options ...RouterOptions){
+func (r *GowayClientRouter) AddClient(client domain.ClientV1, mode string, filters []string, options ...RouterOptions){
 	internalRouter := &InternalClientRouter{
 		&client,
 		NewGoWayRouter(options...),
