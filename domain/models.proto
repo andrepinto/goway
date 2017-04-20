@@ -278,14 +278,15 @@ message ClientsResponse {
 
 message Client_v1 {
     string id = 1;
-    string apiPath = 2;
-    string product = 3;
-    string productVersion = 4;
-    string client = 5;
-    bool removeApiPath = 6;
-    string version = 7;
-    repeated InjectData_v1 globalInjectData = 8;
-    repeated Routes_v1 routes = 9;
+    string code = 2;
+    string apiPath = 3;
+    string product = 4;
+    string productVersion = 5;
+    string client = 6;
+    bool removeApiPath = 7;
+    string version = 8;
+    repeated InjectData_v1 globalInjectData = 9;
+    repeated Routes_v1 routes = 10;
 }
 
 message RoutesRequest {
