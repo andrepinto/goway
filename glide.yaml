@@ -23,3 +23,8 @@ import:
   version: 0.10.0
 - package: github.com/imdario/mergo
   version: 0.2.2
+- package: gopkg.in/mgo.v2
+  subpackages:
+  - bson
+- package: github.com/couchbase/gocb
+  version: v1.2.2
