@@ -3,7 +3,6 @@ package proxy
 import (
 	"fmt"
 	"time"
-	"bytes"
 	"strings"
 	"net/url"
 	"net/http"
@@ -168,10 +167,6 @@ func(p *GoWayProxy) respond( req *http.Request, res *HttpResponse ) {
 	end := time.Now()
 
 
-	buf := new(bytes.Buffer)
-	buf.ReadFrom(req.Body)
-	request := buf.String()
-
 	log := LogRecord{
 
 		Time:          	end.UTC(),
@@ -185,8 +180,8 @@ func(p *GoWayProxy) respond( req *http.Request, res *HttpResponse ) {
 		Size:          	int64(len(response)),
 		ElapsedTime:   	end.Sub(res.StartTime),
 		RequestHeader: 	req.Header,
-		ResBody:		response,
-		ReqBody: 		request,
+		ResBody:	[]byte(""),
+		ReqBody: 	[]byte(""),
 		ServicePath:   	req.URL.Path,
 		Product:       	req.Header.Get(GOWAY_PRODUCT),
 		Client:        	req.Header.Get(GOWAY_CLIENT),
