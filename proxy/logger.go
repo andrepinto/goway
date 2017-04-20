@@ -23,8 +23,8 @@ type LogRecord struct {
 	ElapsedTime                               time.Duration		`json:"elapsed_time"`
 	RequestHeader                             http.Header		`json:"request_header"`
 	CustomRecords                             map[string]string	`json:"custom_records"`
-	ReqBody					  string		`json:"request_body"`
-	ResBody					  string		`json:"response_body"`
+	ReqBody					  []byte		`json:"request_body"`
+	ResBody					  []byte		`json:"response_body"`
 	ServiceName				  string		`json:"service_name"`
 	BasePath			 	  string		`json:"base_path"`
 
