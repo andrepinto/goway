@@ -265,7 +265,7 @@ message ClientCreateRouteRequest {
 
 message ClientCreateInjectRequest {
     string id = 1;
-    InjectData_v1 route = 2;
+    InjectData_v1 inject = 2;
 }
 
 message ClientResponse {
