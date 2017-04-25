@@ -150,6 +150,29 @@ func (s *gowayImpl) CreateClientRoute(context context.Context, clientCreateRoute
 	}, nil
 }
 
-func (s *gowayImpl) CreateClientInject(context.Context, *domain.ClientCreateInjectRequest) (*domain.InjectResponse, error) {
-	return nil, nil
+func (s *gowayImpl) CreateClientInject(context context.Context, clientCreateInjectRequest *domain.ClientCreateInjectRequest) (*domain.InjectResponse, error) {
+	var injectModel *domain.Inject
+
+	injectCreate, err := json.Marshal(clientCreateInjectRequest.Inject); if err != nil {
+		return nil, err
+	}
+	errUpdate := json.Unmarshal(injectCreate, &injectModel); if errUpdate != nil {
+		return nil, err
+	}
+
+	inject, err := s.api.CreateClientInject(clientCreateInjectRequest.Id, injectModel); if err != nil {
+		return nil, err
+	}
+
+	var injectData_v1 *domain.InjectDataV1
+	p, err := json.Marshal(inject); if err != nil {
+		return nil, err
+	}
+	err2 := json.Unmarshal(p, &injectData_v1); if err2 != nil {
+		return nil, err
+	}
+
+	return &domain.InjectResponse{
+		Result: injectData_v1,
+	}, nil
 }
