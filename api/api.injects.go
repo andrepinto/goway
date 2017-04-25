@@ -13,12 +13,12 @@ func (api *ApiResource) GetInjects() (interface{}, error) {
 
 func (api *ApiResource) GetInject(id string) (interface{}, error) {
 	var model domain.Inject
-	return api.Get(id, model, []string{"InjectData" })
+	return api.Get(id, model, nil)
 }
 
 func (api *ApiResource) GetInjectByCode(code string) (interface{}, error) {
 	var model domain.Inject
-	return api.GetByCode(code, model, []string{"InjectData" })
+	return api.GetByCode(code, model, nil)
 }
 
 func (api *ApiResource) UpdateInject(id string, value interface{}) (interface{}, error) {
