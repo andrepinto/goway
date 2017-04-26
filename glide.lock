@@ -1,5 +1,5 @@
-hash: 475803134a8d425df06d6eb4f936a9f81ca7b349316d7553f707ef924c18f062
-updated: 2017-04-20T16:15:06.518566481+01:00
+hash: 108f7d074cb7ebd6b4ba1d7c541e9fae69402059de931efb271222f49b375c74
+updated: 2017-04-26T12:28:03.347766161+01:00
 imports:
 - name: github.com/couchbase/gocb
   version: f6356f3ae8be06a2a579541b13705fac80607422
@@ -30,7 +30,7 @@ imports:
 - name: github.com/jinzhu/inflection
   version: 1c35d901db3da928c72a72d8458480cc9ade058f
 - name: github.com/joelbraga/aztek
-  version: 97802f05d4140064f42909ba981510971b962600
+  version: 4e376ba5dd1009ccca221d6570750f632775abad
 - name: github.com/lib/pq
   version: 2704adc878c21e1329f46f6e56a1c387d788ff94
   subpackages:
@@ -51,7 +51,7 @@ imports:
   - lex/httplex
   - trace
 - name: golang.org/x/text
-  version: f4b4367115ec2de254587813edaa901bc1c723a8
+  version: a9a820217f98f7c8a207ec1e45a874e1fe12c478
   subpackages:
   - secure/bidirule
   - transform

@@ -32,16 +32,18 @@ func (api *ApiResource) DeleteInject(id string) (bool, error) {
 }
 
 func (api *ApiResource) CreateClientInject(clientId string, value *domain.Inject) (interface{}, error) {
-	var model domain.Inject
 	var clientModel domain.Client
 
 	if client, errGet := api.Repository.GetById(clientId, clientModel, nil); errGet != nil {
 		return nil, errors.New("clientNotExists")
 	} else {
-		if exists, _ := api.Repository.GetByCode(value.Code, model, nil); exists.(*domain.Inject).Code != "" {
+		value.ReferrerID = client.(*domain.Client).ID
+		if exists, _ := api.Repository.GetWhere(domain.Inject{
+			ReferrerID: value.ReferrerID,
+			Code: value.Code,
+		}, nil); exists.(*domain.Inject).Code != "" {
 			return nil, errors.New("conflict")
 		} else {
-			value.ReferrerID = client.(*domain.Client).ID
 			if err := api.Repository.Create(&value); err != nil {
 				return nil, err
 			} else {
@@ -55,16 +57,18 @@ func (api *ApiResource) CreateClientInject(clientId string, value *domain.Inject
 }
 
 func (api *ApiResource) CreateRouteInject(routeId string, value *domain.Inject) (interface{}, error) {
-	var model domain.Inject
 	var routeModel domain.Route
 
 	if route, errGet := api.Repository.GetById(routeId, routeModel, nil); errGet != nil {
 		return nil, errors.New("routeNotExists")
 	} else {
-		if exists, _ := api.Repository.GetByCode(value.Code, model, nil); exists.(*domain.Inject).Code != "" {
+		value.ReferrerID = route.(*domain.Route).ID
+		if exists, _ := api.Repository.GetWhere(domain.Inject{
+			ReferrerID: value.ReferrerID,
+			Code: value.Code,
+		}, nil); exists.(*domain.Inject).Code != "" {
 			return nil, errors.New("conflict")
 		} else {
-			value.ReferrerID = route.(*domain.Route).ID
 			if err := api.Repository.Create(&value); err != nil {
 				return nil, err
 			} else {

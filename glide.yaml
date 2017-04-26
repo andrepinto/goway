@@ -28,3 +28,5 @@ import:
   - bson
 - package: github.com/couchbase/gocb
   version: v1.2.2
+- package: github.com/joelbraga/aztek
+  version: v0.3.0
