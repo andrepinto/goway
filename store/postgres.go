@@ -37,11 +37,13 @@ func (rp *PostgresRepository) GetAllProducts() []domain.ProductV1 {
 	} else {
 		var products_v1 []domain.ProductV1
 
-		p, err := json.Marshal(products); if err != nil {
+		p, err := json.Marshal(products)
+		if err != nil {
 			return nil
 		}
 
-		err2 := json.Unmarshal(p, &products_v1); if err2 != nil {
+		err2 := json.Unmarshal(p, &products_v1)
+		if err2 != nil {
 			return nil
 		}
 		return products_v1
@@ -51,21 +53,32 @@ func (rp *PostgresRepository) GetAllProducts() []domain.ProductV1 {
 
 func (rp *PostgresRepository) GetAllClients() []domain.ClientV1 {
 	var clients []domain.Client
-	if err := rp.DB.Preload("InjectData").Preload("Routes.InjectData").Preload("Routes").Find(&clients).Error; err != nil {
+	if err := rp.DB.
+		Preload("InjectData", func(db *gorm.DB) *gorm.DB {
+		return db.Order("injects.referrer_id").Order("injects.order ASC")
+	}).
+		Preload("Routes.InjectData", func(db *gorm.DB) *gorm.DB {
+		return db.Order("injects.referrer_id").Order("injects.order ASC")
+	}).
+		Preload("Routes").
+		Find(&clients).Error; err != nil {
 		return nil
 	} else {
 		var clients_v1 []domain.ClientV1
 
-		c, err := json.Marshal(clients); if err != nil {
+		c, err := json.Marshal(clients)
+		if err != nil {
 			return nil
 		}
 
-		err2 := json.Unmarshal(c, &clients_v1); if err2 != nil {
+		err2 := json.Unmarshal(c, &clients_v1)
+		if err2 != nil {
 			return nil
 		}
 		return clients_v1
 	}
-	return nil}
+	return nil
+}
 
 func (rp *PostgresRepository) CreateProduct(product *domain.ProductV1) (bool, *domain.ProductV1) {
 	return true, nil
