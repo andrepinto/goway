@@ -58,7 +58,7 @@ func (rp *PostgresRepository) GetAllClients() []domain.ClientV1 {
 		return db.Order("injects.referrer_id").Order("injects.order ASC")
 	}).
 		Preload("Routes.InjectData", func(db *gorm.DB) *gorm.DB {
-		return db.Order("injects.referrer_id").Order("injects.order ASC")
+		return db.Order("injects.referrer_id").Order("injects.order DESC")
 	}).
 		Preload("Routes").
 		Find(&clients).Error; err != nil {
