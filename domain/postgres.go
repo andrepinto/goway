@@ -84,7 +84,7 @@ type Inject struct {
 	Code				string 				`gorm:"unique_index:idx_inject_code" json:"code"`
 	Where 				string 				`json:"where"`
 	Value				string 				`json:"value"`
-	Order				int				`sql:"DEFAULT:0" json:"order"`
+	Order				int32				`json:"order"`
 }
 
 func (inject *Inject) BeforeCreate(scope *gorm.Scope) (err error) {
