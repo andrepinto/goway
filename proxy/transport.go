@@ -22,12 +22,17 @@ func (t *transport) RoundTrip(req *http.Request) (res *http.Response, err error)
 	req.Header.Del(GOWAY_SERVICE_NAME)
 	req.Header.Del(GOWAY_BASE_PATH)
 
-	reqBodyBytes, err := ioutil.ReadAll(req.Body)
-	if err != nil {
-		return nil, err
+	reqBodyBytes := []byte{' '}
+	
+	if req.Body != nil{
+		reqBodyBytes, _ = ioutil.ReadAll(req.Body)
+		if err != nil {
+			return nil, err
+		}
+		req.Body.Close()
 	}
-	req.Body.Close()
-
+	
+	
 	reqBody := ioutil.NopCloser(bytes.NewReader(reqBodyBytes))
 	req.Body = reqBody
 
