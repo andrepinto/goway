@@ -1,7 +1,6 @@
 package router
 
 import (
-	"fmt"
 	"github.com/andrepinto/goway/util"
 	"github.com/andrepinto/goway/domain"
 )
@@ -34,8 +33,6 @@ func (r *GowayProductRouter) AddProduct(product domain.ProductV1, mode string, f
 
 	r.Products[util.ProductCode(product.Code, product.Version)]=internalRouter
 
-
-	fmt.Println("------------------------------")
 
 
 }

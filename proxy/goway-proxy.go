@@ -20,7 +20,7 @@ import (
 
 
 type GoWayProxy struct{
-	proxy        	 	*httputil.ReverseProxy
+	//proxy        	 	*httputil.ReverseProxy
 	target        		*url.URL
 	productRouter       	*router.GowayProductRouter
 	clientRouter        	*router.GowayClientRouter
@@ -28,6 +28,7 @@ type GoWayProxy struct{
 	HttpRequestLog 		HttpRequestLog
 	TaskWorker 	        worker.ITaskWorker
 	ClientMode		string
+	ServicesTarget 		map[string]*url.URL
 
 }
 
@@ -38,26 +39,34 @@ type GowayProxyOptions struct {
 	HandlerWorker 		*handlers.HandlerWorker
 	TaskWorker 		worker.ITaskWorker
 	ClientMode		string
+	Services 		[]*domain.ServiceV1
 }
 
 //noinspection GoUnusedExportedFunction
 func NewGoWayProxy(options *GowayProxyOptions) *GoWayProxy{
-	target, _ := url.Parse(options.Target)
-	proxy := httputil.NewSingleHostReverseProxy(target)
-	proxy.Transport = &transport{http.DefaultTransport}
+
 
 	if len(options.ClientMode)==0 {
 		options.ClientMode = constants.API_KEY_MODE
 	}
 
+	target, _ := url.Parse(options.Target)
+
+	serviceTargets, err := domain.ServiceV1ToServiceTarget(options.Services)
+
+	if err != nil{
+		panic(err)
+	}
+
+
 	return &GoWayProxy{
-		proxy: proxy,
-		//target: target,
+		target		: target,
 		productRouter	: options.ProductRouter,
 		clientRouter	: options.ClientRouter,
 		handlerWorker	: options.HandlerWorker,
 		TaskWorker	: options.TaskWorker,
 		ClientMode      : options.ClientMode,
+		ServicesTarget  : serviceTargets,
 	}
 }
 
@@ -211,11 +220,22 @@ func(p *GoWayProxy) redirect(route *router.Route, globalInjectData []*domain.Inj
 		return
 	}
 
-	req.URL.Path = fmt.Sprintf("%s%s", route.ApiMethod.ServiceName, req.URL.Path)
+	req.URL.Path = fmt.Sprintf("%s",  req.URL.Path)
 
 
 	res.ResponseWriter.Header().Set("X-Content-Type-Options", "nosniff")
-	p.proxy.ServeHTTP(res.ResponseWriter, req)
+
+	targetService := p.ServicesTarget[route.ApiMethod.ServiceName]
+
+	if targetService == nil{
+		targetService = p.target
+	}
+
+	fmt.Println(targetService)
+
+	proxy := httputil.NewSingleHostReverseProxy(targetService)
+	proxy.Transport = &transport{http.DefaultTransport}
+	proxy.ServeHTTP(res.ResponseWriter, req)
 
 }
 
