@@ -15,6 +15,7 @@ import (
 	"github.com/andrepinto/goway/util/worker"
 	"github.com/andrepinto/goway/domain"
 	"github.com/andrepinto/goway/constants"
+	"golang.org/x/net/proxy"
 )
 
 
@@ -203,40 +204,37 @@ func(p *GoWayProxy) respond( req *http.Request, res *HttpResponse ) {
 	worker.JobQueue <- job
 }
 
-func(p *GoWayProxy) redirect(route *router.Route, globalInjectData []*domain.InjectDataV1, req *http.Request, res *HttpResponse) {
+func (p *GoWayProxy) redirect(route *router.Route, globalInjectData []*domain.InjectDataV1, req *http.Request, res *HttpResponse) {
 
 	req.Header.Set(GOWAY_SERVICE_NAME, route.ApiMethod.ServiceName)
 	req.Header.Set(GOWAY_BASE_PATH, route.ApiMethod.ListenPath)
 
-	if(route.ApiMethod.InjectGlobalData){
-		p.injectDataValues(util.MergeInjectData(globalInjectData,route.ApiMethod.InjectData), req)
-	}else{
+	if route.ApiMethod.InjectGlobalData {
+		p.injectDataValues(util.MergeInjectData(globalInjectData, route.ApiMethod.InjectData), req)
+	} else {
 		p.injectDataValues(route.ApiMethod.InjectData, req)
 	}
 
 	err := p.dispatchHandlers(route, req)
-	if(err != nil){
-		p.respond( req, res.Set( err.Status, err.Message, err.Data ) )
+	if err != nil {
+		p.respond(req, res.Set(err.Status, err.Message, err.Data))
 		return
 	}
 
-	req.URL.Path = fmt.Sprintf("%s",  req.URL.Path)
+	targetService := p.ServicesTarget[route.ApiMethod.ServiceName]
 
+	if targetService == nil {
+		req.URL.Path = fmt.Sprintf("%s%s", route.ApiMethod.ServiceName, req.URL.Path)
+		targetService = p.target
+	} else {
+		req.URL.Path = fmt.Sprintf("%s", req.URL.Path)
+	}
 
 	res.ResponseWriter.Header().Set("X-Content-Type-Options", "nosniff")
 
-	targetService := p.ServicesTarget[route.ApiMethod.ServiceName]
-
-	if targetService == nil{
-		targetService = p.target
-	}
-
-	fmt.Println(targetService)
-
-	proxy := httputil.NewSingleHostReverseProxy(targetService)
-	proxy.Transport = &transport{http.DefaultTransport}
-	proxy.ServeHTTP(res.ResponseWriter, req)
-
+	_proxy := httputil.NewSingleHostReverseProxy(targetService)
+	_proxy.Transport = &transport{http.DefaultTransport}
+	_proxy.ServeHTTP(res.ResponseWriter, req)
 }
 
 func(p *GoWayProxy) injectDataValues(values []*domain.InjectDataV1, r *http.Request){
