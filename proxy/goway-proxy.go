@@ -15,7 +15,6 @@ import (
 	"github.com/andrepinto/goway/util/worker"
 	"github.com/andrepinto/goway/domain"
 	"github.com/andrepinto/goway/constants"
-	"golang.org/x/net/proxy"
 )
 
 
