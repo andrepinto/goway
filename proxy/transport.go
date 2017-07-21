@@ -8,7 +8,13 @@ import (
 	"bytes"
 	"strconv"
 	"github.com/andrepinto/goway/util/worker"
+	"log"
+	"encoding/json"
 )
+
+type test_struct struct {
+	Test string
+}
 
 type transport struct {
 	http.RoundTripper
@@ -26,6 +32,15 @@ func (t *transport) RoundTrip(req *http.Request) (res *http.Response, err error)
 	
 	if req.Body != nil{
 		reqBodyBytes, _ = ioutil.ReadAll(req.Body)
+
+		log.Println(string(reqBodyBytes))
+		var t test_struct
+		err = json.Unmarshal(reqBodyBytes, &t)
+		if err != nil {
+			panic(err)
+		}
+		log.Println(t.Test)
+
 		if err != nil {
 			return nil, err
 		}
