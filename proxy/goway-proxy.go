@@ -235,9 +235,10 @@ func (p *GoWayProxy) redirect(route *router.Route, globalInjectData []*domain.In
 	ht := http.DefaultTransport.(*http.Transport)
 	ht.MaxIdleConns = p.MaxIdleConns
 	ht.MaxIdleConnsPerHost = p.MaxIdleConnsPerHost
+	tr := &transport{ht}
 
 	_proxy := httputil.NewSingleHostReverseProxy(targetService)
-	_proxy.Transport = ht
+	_proxy.Transport = tr
 	_proxy.ServeHTTP(res.ResponseWriter, req)
 
 }
